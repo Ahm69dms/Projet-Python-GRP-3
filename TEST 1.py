@@ -1,1 +1,1 @@
-input a 
+input("hello mamadou")
