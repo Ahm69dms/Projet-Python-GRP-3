@@ -1,3 +1,1 @@
-input a 
- salut les gars
-
+print ("ceci est un wordpress")
