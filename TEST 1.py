@@ -1,3 +1,2 @@
-input a 
- salut les gars
+print ("Hello")
 
