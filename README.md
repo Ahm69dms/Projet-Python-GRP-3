@@ -15,4 +15,9 @@ Nous utiliserons PIP, le gestionnaire de paquets Python, pour :
 
     Installer des modules externes qui pourraient être utiles pour certaines fonctionnalités (par exemple, un module pour la manipulation de dates, un module pour générer des rapports, etc.).
     Gérer les dépendances du projet, c'est-à-dire la liste des modules externes nécessaires au fonctionnement de l'application.
+
+ Utilité du fichier requierements.txt
+    Le fichier requierement.txt liste les dependances nécessaires au bon fonctionnement du projet. Cela permet aux autres utilisateurs de facilement installer ces bibliotheques via pip,
+    garantissant ainsi qu'ils disposent des bonnes versions des packages pour exécuter.
+    
     

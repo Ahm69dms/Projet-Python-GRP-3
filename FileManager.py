@@ -14,7 +14,7 @@ class FileManager:
         
     """la fonction pour écrire les données dans le fichier."""  
     def write_to_file(self, data):
-        data = input("Entrez les données à ajouter au fichier: ")
+        data = input("Ajoutez une nouvelle ligne: ")
         try:
             with open(self.file_path, 'a') as file: # ouvrir le fichier en mode append, sans supprimer le contenu précedent
                 file.write(data + '\n')  # Écrire les données dans le fichier

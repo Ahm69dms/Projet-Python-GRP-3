@@ -11,9 +11,9 @@ file_manager = FileManager("C:\\Users\\BAANA_MEKA\Desktop\\log.txt")  ## chemin 
 file_manager.read_file()
 
 # Écrire des données dans le fichier
-file_manager.write_to_file()
+file_manager.write_to_file("mot-clé")
 
-# Compter les lignes et afficher le résultat
+#Compter les lignes et afficher le résultat
 nombre_de_lignes = file_manager.count_lines()
 print(f"Nombre de lignes dans le fichier : {nombre_de_lignes}")
 
