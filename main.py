@@ -1,23 +1,48 @@
 from FileManager import FileManager
-#if __name__ == "__main__":
 
-"""cette commande permet de lier le fichier log.txt à l'instance de la classe FileManager, afin de pouvoir
-                  manipuler ce fichier à l'aide des méthodes définies dans la classe."""
-file_manager = FileManager("C:\\Users\\BAANA_MEKA\Desktop\\log.txt")  ## chemin vers mon fichier
+if __name__ == "__main__":
 
+    # Crée une instance de FileManager avec le chemin vers le fichier
+    file_manager = FileManager("C:\\Users\\BAANA_MEKA\\Desktop\\log.txt")
+    choice = 0
+    
+    # le while nous permet de gérer le cas de d'erreur si l'utilisateur entre un choix invalide
+    while choice==0:
+        print("\nChoisissez une action:")
+        print("1. Lire le fichier")
+        print("2. Modifier le fichier")
+        print("3. Rechercher un mot-clé")
+        print("4. Compter le nombre de lignes")
+        print("5. Quitter")
 
+        try:
+            choice = int(input("Entrez le numéro de votre choix: "))
+        except ValueError:
+            print("--------------erreur, Veuillez entrer un numéro valide.---------------")
+            continue
 
-# Lire le contenu du fichier
-file_manager.read_file()
+        if choice == 1:
+            # Lire le contenu du fichier
+            file_manager.read_file()
+            
+        elif choice == 2:
+            # Écrire des données dans le fichier
 
-# Écrire des données dans le fichier
-file_manager.write_to_file("mot-clé")
-
-#Compter les lignes et afficher le résultat
-nombre_de_lignes = file_manager.count_lines()
-print(f"Nombre de lignes dans le fichier : {nombre_de_lignes}")
-
-# Rechercher un mot-clé
-file_manager.search_keyword(keyword="mot-clé")
-print("<--FIN-->")
-print()
+            file_manager.write_to_file(data='')
+            
+        elif choice == 3:
+            # Rechercher un mot-clé
+            file_manager.search_keyword(keyword="")
+            
+        elif choice == 4:
+            # Compter le nombre de lignes et afficher le résultat
+            nombre_de_lignes = file_manager.count_lines()
+            print(f"Nombre de lignes dans le fichier : {nombre_de_lignes}")
+            
+        elif choice == 5:
+            # Quitter le programme
+            print("Au revoir!")
+            break
+            
+        else:
+            print("Choix invalide. Veuillez réessayer.")
