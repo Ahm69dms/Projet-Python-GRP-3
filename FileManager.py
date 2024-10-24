@@ -16,9 +16,8 @@ class FileManager:
     def write_to_file(self,data):
          "Ecrire des données dans le fichier."
         try:
-            with open(sel.file_path, 'a') as file:    
-            
-                file.write(data + '\n')
+            with open(sel.file_path, 'a') as file: # Mode 'a' pour ajouter sans effacer   
+                 file.write(data + '\n')
             print(f"Données ajoutées au fichier '{self.file_path}'.")
         except Exception as e:
             print(f'Erreur lors de l'ecriture dans le fichier : {e}")
