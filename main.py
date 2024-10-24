@@ -2,8 +2,12 @@ from FileManager import FileManager
 
 if __name__ == "__main__":
 
+    #demande à l'utilisateur d'entrer le chemin vers le fichier
+    print(f"entrer le chemin vers le fichier :")
+    chemin_fichier = input("")
+
     # Crée une instance de FileManager avec le chemin vers le fichier
-    file_manager = FileManager("C:\\Users\\BAANA_MEKA\\Desktop\\log.txt")
+    file_manager = FileManager( chemin_fichier )  ## chemin vers mon fichier
     choice = 0
     
     # le while nous permet de gérer le cas de d'erreur si l'utilisateur entre un choix invalide
