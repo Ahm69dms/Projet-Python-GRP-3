@@ -14,11 +14,10 @@ class FileManager:
         
     """la fonction pour écrire les données dans le fichier."""  
     def write_to_file(self, data):
-        data = input("Ajoutez une nouvelle ligne: ")
         try:
-            with open(self.file_path, 'a') as file: # ouvrir le fichier en mode append, sans supprimer le contenu précedent
+            with open(self.file_path, 'a') as file: # ouvre le fichier en mode append, sans supprimer le contenu précedent
                 file.write(data + '\n')  # Écrire les données dans le fichier
-                print(f"Les données ont été écrites avec succès dans {self.file_path}.")
+                #print(f"Les données ont été écrites avec succès dans {self.file_path}.")
         except Exception as erreur:  # Capture toute erreur
             print(f"Erreur lors de l'écriture dans le fichier : {erreur}")  # Affiche le message d'erreur
         
@@ -56,9 +55,6 @@ class FileManager:
         except FileNotFoundError:
                 print("---ERROR, FILE NOT FOUND--")
 
-            
         
-# Test de la classe
-print("<--DEBUT-->")
 
    
