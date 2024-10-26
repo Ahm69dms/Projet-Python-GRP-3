@@ -1,36 +1,34 @@
-""" Importation de la bibliothèque standard tkinter qui nous permettra de  
-créer notre interface graphique (GUI)"""
-
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox, filedialog, simpledialog
 from FileManager import FileManager
 
-# Création de la classe LogManagerApp qui contient toutes les fonctionnalités de l'API
 class LogManagerApp:
-    
-    # Constructeur de la classe
     def __init__(self, root):
         # Initialisation de la Fenêtre Principale
         self.root = root
         self.root.title("Gestionnaire de fichiers log")
         
-        # la taille initiale de la fenêtre
-        self.root.geometry("800x600")  # Largeur x Hauteur
-
-        # instance de FileManager avec le fichier log.txt
-        self.file_manager = FileManager("C:\\Users\\BAANA_MEKA\\Desktop\\log.txt")
+        # Taille initiale de la fenêtre
+        self.root.geometry("800x600")
         
-        # Boutons pour ajouter, lire, modifier, rechercher et compter les lignes de notre fichier
-        self.read_button = tk.Button(root, text="Lire le fichier", command=self.display_logs)
+        # Initialise la variable du gestionnaire de fichiers
+        self.file_manager = None
+        
+        # Bouton pour ajouter le fichier log
+        add_file_button = tk.Button(root, text="Ajouter le fichier", command=self.add_file)
+        add_file_button.pack(pady=20)
+        
+        # Boutons pour les autres fonctionnalités
+        self.read_button = tk.Button(root, text="Lire le fichier", command=self.display_logs, state=tk.DISABLED)
         self.read_button.pack(pady=10)
         
-        self.write_button = tk.Button(root, text="Modifier le fichier", command=self.write_to_file)
+        self.write_button = tk.Button(root, text="Modifier le fichier", command=self.write_to_file, state=tk.DISABLED)
         self.write_button.pack(pady=10)
         
-        self.search_button = tk.Button(root, text="Rechercher un mot-clé", command=self.search_keyword)
+        self.search_button = tk.Button(root, text="Rechercher un mot-clé", command=self.search_keyword, state=tk.DISABLED)
         self.search_button.pack(pady=10)
         
-        self.count_button = tk.Button(root, text="Compter les lignes", command=self.count_lines)
+        self.count_button = tk.Button(root, text="Compter les lignes", command=self.count_lines, state=tk.DISABLED)
         self.count_button.pack(pady=10)
         
         self.quit_button = tk.Button(root, text="Quitter", command=root.quit)
@@ -39,64 +37,73 @@ class LogManagerApp:
         # Zone de texte pour afficher les résultats
         self.text_area = tk.Text(root, height=25, width=100)
         self.text_area.pack(pady=10)
-
-    """
-        La fonction display_logs a pour rôle de lire le contenu du fichier 
-        et de l'afficher dans la zone de texte de l'interface graphique.
-    """
+        
+    def add_file(self):
+        # Ouvre le dialogue de sélection de fichier
+        file_path = filedialog.askopenfilename(title="Selectionner un fichier")
+        if file_path:
+            print(f"File selected: {file_path}")
+            self.file_manager = FileManager(file_path=file_path)
+            
+            # Active les boutons une fois que le fichier est sélectionné
+            self.read_button.config(state=tk.NORMAL)
+            self.write_button.config(state=tk.NORMAL)
+            self.search_button.config(state=tk.NORMAL)
+            self.count_button.config(state=tk.NORMAL)
+        else:
+            print("Aucun fichier.")
+    
+#   fonction pour lire et afficher le contenu du fichier spécifié
     def display_logs(self):
         try:
-            self.text_area.delete(1.0, tk.END)  # Efface l'ancien contenu de la zone de texte
+            self.text_area.delete(1.0, tk.END)
             with open(self.file_manager.file_path, 'r') as file:
-                contenu = file.read()  
-            self.text_area.insert(tk.END, contenu)  # Affiche le contenu dans la zone de texte
+                contenu = file.read()
+            self.text_area.insert(tk.END, contenu)
         except FileNotFoundError:
             messagebox.showerror("Erreur", "Le fichier est introuvable.") 
-            
-    """pour demander à l'utilisateur d'ajouter une nouvelle ligne au fichier."""
+
+#   pour écrire les données dans le fichier 
     def write_to_file(self):
-        # fenêtre pour modifier le fichier.
         self.dialog = tk.Toplevel(self.root)
         self.dialog.title("Modifier le fichier")
-        self.dialog.geometry("400x200") 
-        self.entry = tk.Text(self.dialog, height=20, width=80)
+        self.dialog.geometry("400x200")
+        self.entry = tk.Text(self.dialog, height=10, width=50)
         self.entry.pack(pady=20)
 
-        # Bouton pour ajouter le texte
         add_button = tk.Button(self.dialog, text="Ajouter", command=self.add_text)
         add_button.pack(pady=10)
 
-        # Bouton pour fermer la fenêtre
         close_button = tk.Button(self.dialog, text="Annuler", command=self.dialog.destroy)
         close_button.pack(pady=5)
-        
-        # fonction pour Obtenir le texte et l'insérer dans le fichier
+
+# permet à l'utilisateur d'entrer du texte via une zone de saisie et d'ajouter ce texte au fichier
     def add_text(self):
-        data = self.entry.get("1.0", tk.END).strip()  
+        data = self.entry.get("1.0", tk.END).strip()
         if data:
             self.file_manager.write_to_file(data)
             self.text_area.insert(tk.END, f"{data}\n")
             messagebox.showinfo("Succès", "La ligne a été ajoutée au fichier.")
-            self.dialog.destroy()  # Ferme la fenêtre après ajout
+            self.dialog.destroy()
         else:
             messagebox.showwarning("Avertissement", "Aucune donnée n'a été ajoutée.")
-
-    """Recherche un mot-clé dans le fichier log."""
+    
+#pour rechercher un mot-clé dans le fichier et afficher les lignes correspondantes
     def search_keyword(self):
         keyword = simpledialog.askstring("Rechercher un mot-clé", "Entrez le mot-clé à rechercher :")
         if keyword:
-            self.text_area.delete(1.0, tk.END)  # Efface la zone de texte
+            self.text_area.delete(1.0, tk.END)
             with open(self.file_manager.file_path, 'r') as file:
                 lines = file.readlines()
                 found = False
-                for i, line in enumerate(lines):
+                for i, line in enumerate(lines,0):
                     if keyword.lower() in line.lower():
                         self.text_area.insert(tk.END, f"Ligne {i+1}: {line}")
                         found = True
                 if not found:
                     self.text_area.insert(tk.END, "Aucun résultat trouvé.")
-                    
-    """Compte et affiche le nombre de lignes dans le fichier"""
+
+#pour retourner le nombre de lignes dans le fichier
     def count_lines(self):
         nombre_de_lignes = self.file_manager.count_lines()
         messagebox.showinfo("Nombre de lignes", f"Le fichier contient {nombre_de_lignes} lignes.")

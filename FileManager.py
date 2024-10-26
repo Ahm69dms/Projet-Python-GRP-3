@@ -43,10 +43,10 @@ class FileManager:
                 trouver = False
             
                 for numero_ligne, line in enumerate(mon_fichier, start=1):
-                    if keyword in line.lower():  # Comparer la ligne et le mot-clé en minuscules
+                    if keyword in line.lower():  # pour comparer la ligne et le mot-clé en minuscules
                         print(f"Mot-clé trouvé à la ligne {numero_ligne}: {line.strip()}")
                         trouver = True
-                        total += line.lower().count(keyword)  # Compter les occurrences du mot-clé dans la ligne
+                        total += line.lower().count(keyword)  # pour compter les occurrences du mot-clé dans la ligne
             
             print(f"Le mot '{keyword}' apparaît {total} fois dans le fichier.")
             
